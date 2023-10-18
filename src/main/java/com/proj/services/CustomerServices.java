@@ -31,6 +31,7 @@ public class CustomerServices {
 
             if (chkCustomer == null) {
                 System.out.println(customer_data.toString());
+                customer_data.setStatus("active");
                 cusRepo.save(customer_data);
                 String body = "Account Created Successfully\r\n" + //
                         "-----------------------------------------\r\n" + //
@@ -87,7 +88,7 @@ public class CustomerServices {
                         "\r\n" + //
                         "To access account visit http://localhost:3000";
 
-                mailSender.sendMail(selectedCustomer.getEmail(), "Password changed : Dunn App 😉", body);
+                mailSender.sendMail(selectedCustomer.getEmail(), "Password changed : DC Billing", body);
                 cusRepo.save(selectedCustomer);
                 return ResponseEntity.ok().body("Success");
             }
@@ -122,7 +123,7 @@ public class CustomerServices {
                         "\r\n" + //
                         "To access account visit http://localhost:4200";
 
-                mailSender.sendMail(selectedCustomer.getEmail(), "Password change request : Dunn App 😉", body);
+                mailSender.sendMail(selectedCustomer.getEmail(), "Password change request : DC Billing 😉", body);
                 return ResponseEntity.ok().body("Success");
             }
             return ResponseEntity.ok().body("No user found");
@@ -130,7 +131,39 @@ public class CustomerServices {
         }else{
             return ResponseEntity.badRequest().body("Failed");
         }
+        
     }
+
+	public ResponseEntity<String> updateProfile(Customer data) {
+		if(data!=null) {
+		Customer selectedCustomer = cusRepo.findByEmail(data.getEmail());
+		if(selectedCustomer!=null) {
+			if(data.getCustomerName()!=null&&data.getAddress()==null) {
+				selectedCustomer.setCustomerName(data.getCustomerName());
+				cusRepo.save(selectedCustomer);
+				return ResponseEntity.ok().body("NameSuccess");
+			}
+			else if(data.getAddress()!=null&&data.getCustomerName()==null) {
+				selectedCustomer.setAddress(data.getAddress());
+				cusRepo.save(selectedCustomer);
+				return ResponseEntity.ok().body("AddressSuccess");
+			}
+			else if(data.getAddress()!=null&&data.getCustomerName()!=null) {
+				selectedCustomer.setCustomerName(data.getCustomerName());
+				selectedCustomer.setAddress(data.getAddress());
+				cusRepo.save(selectedCustomer);
+				return ResponseEntity.ok().body("BothSuccess");
+			}
+		}
+		else {
+			return ResponseEntity.ok().body("No customer found");
+			}
+		}
+		else {
+			return ResponseEntity.badRequest().body("Failed");
+		}
+		return null;
+	}
 
 	
 	

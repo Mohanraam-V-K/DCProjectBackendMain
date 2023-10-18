@@ -45,4 +45,9 @@ public class CustomerController {
     public ResponseEntity<String> forgotPass(@RequestBody Customer data) {
         return cusService.forgotPass(data);
     }
+    
+    @PutMapping("/updateprofile")
+    public ResponseEntity<String> updateProfile(@RequestBody Customer data) {
+        return cusService.updateProfile(data);
+    }
 }

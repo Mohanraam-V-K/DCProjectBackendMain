@@ -9,8 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class CustomerBill {
-
+public class BillHistory {
 	@Id
 	@GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -18,31 +17,14 @@ public class CustomerBill {
 	
     private String customerId;
     
+	public UUID getBillId() {
+		return billId;
+	}
+	public void setBillId(UUID billId) {
+		this.billId = billId;
+	}
 	private String email;
-	private String plan_type;
-    private Double planAmount;
-    private String planName;
-    private String planDuration;
-    
-    
-    
-    public CustomerBill( String customerId, String email, String plan_type, Double planAmount,
-			String planName, String planDuration, String planDueDate, String planstatus) {
-		super();
-		this.customerId = customerId;
-		this.email = email;
-		this.plan_type = plan_type;
-		this.planAmount = planAmount;
-		this.planName = planName;
-		this.planDuration = planDuration;
-		this.planDueDate = planDueDate;
-		this.planstatus = planstatus;
-	}
-	public CustomerBill() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public String getCustomerId() {
+    public String getCustomerId() {
 		return customerId;
 	}
 	public void setCustomerId(String customerId) {
@@ -84,14 +66,28 @@ public class CustomerBill {
 	public void setPlanDueDate(String planDueDate) {
 		this.planDueDate = planDueDate;
 	}
-	
-    public UUID getBillId() {
-		return billId;
+	private String plan_type;
+    public BillHistory() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	public void setBillId(UUID billId) {
+	public BillHistory(UUID billId, String customerId, String email, String plan_type, Double planAmount,
+			String planName, String planDuration, String planDueDate, String planstatus) {
+		super();
 		this.billId = billId;
+		this.customerId = customerId;
+		this.email = email;
+		this.plan_type = plan_type;
+		this.planAmount = planAmount;
+		this.planName = planName;
+		this.planDuration = planDuration;
+		this.planDueDate = planDueDate;
+		this.planstatus = planstatus;
 	}
-	private String planDueDate;
+	private Double planAmount;
+    private String planName;
+    private String planDuration;
+    private String planDueDate;
     private String planstatus;
 	public String getPlanstatus() {
 		return planstatus;

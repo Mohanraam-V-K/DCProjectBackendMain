@@ -27,6 +27,7 @@ public class Report {
 	private String category;
 	private String description;
 	private String date;
+	private String status;
 	public int getReportid() {
 		return reportid;
 	}
@@ -38,6 +39,12 @@ public class Report {
 	}
 	public void setCustomeremail(String customeremail) {
 		this.customeremail = customeremail;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public String getCategory() {
 		return category;
@@ -57,13 +64,14 @@ public class Report {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public Report(int reportid, String customeremail, String category, String description, String date) {
+	public Report(int reportid, String customeremail, String category, String description, String date,String status) {
 		super();
 		this.reportid = reportid;
 		this.customeremail = customeremail;
 		this.category = category;
 		this.description = description;
 		this.date = date;
+		this.status=status;
 	}
 	public Report() {
 		super();

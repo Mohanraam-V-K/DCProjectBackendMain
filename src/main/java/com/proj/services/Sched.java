@@ -12,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-
+import com.proj.model.BillHistory;
 import com.proj.model.Customer;
 import com.proj.model.CustomerBill;
 import com.proj.payload.ScheduleEmailReq;
+import com.proj.repository.BillHistoryRepo;
 import com.proj.repository.CustomerBillRepo;
 import com.proj.repository.CustomerRepo;
 
@@ -26,6 +27,9 @@ public class Sched {
     private CustomerBillRepo cusBillrepo;
     @Autowired
     private CustomerRepo cusRepo;
+    
+    @Autowired
+    private BillHistoryRepo hisrepo;
 
     private final EmailScheduler emailsScheduler;
 
@@ -34,7 +38,7 @@ public class Sched {
         this.emailsScheduler = emailScheduler;
     }
 
-    @Scheduled(cron = "0 0 10 * * *") // 9AM everyday
+    @Scheduled(cron = "0 0 12 * * *") // 12noon everyday
     public void sendEmail() {
         List<CustomerBill> allBills = cusBillrepo.findAll();
 
@@ -59,12 +63,23 @@ public class Sched {
                 emailData.setBody("<h1> PLan is end today </h1>");
                 emailsScheduler.scheduleEmail(emailData);
                 System.out.println(cus.toString());
-
+                BillHistory history=new BillHistory();
+                history.setCustomerId(customerBill.getCustomerId());
+                history.setEmail(customerBill.getEmail());
+                history.setPlan_type(customerBill.getPlan_type());
+                history.setPlanAmount(customerBill.getPlanAmount());
+                history.setPlanDueDate(customerBill.getPlanDueDate());
+                history.setPlanDuration(customerBill.getPlanDuration());
+                history.setPlanName(customerBill.getPlanName());
+                history.setPlanstatus("plan expired");
+                history.setBillId(customerBill.getBillId());
+                hisrepo.save(history);
+                cusBillrepo.delete(customerBill);
                 System.out.println("same");
             } else if (date.isBefore(currentDate)) {
                 emailData.setSubject("Your Plan is ended pls recharge");
                 emailData.setBody("<h1> PLan ended " + daysDifference + " Days before</h1>");
-                emailsScheduler.scheduleEmail(emailData);
+                emailsScheduler.scheduleEmail(emailData);            
                 System.out.println("past");
             } else {
 
@@ -81,7 +96,7 @@ public class Sched {
                 cus.setStatus("deactivated");
                 cusRepo.save(cus);
 
-                cusBillrepo.delete(customerBill);
+//                cusBillrepo.delete(customerBill);
 
             }
                
