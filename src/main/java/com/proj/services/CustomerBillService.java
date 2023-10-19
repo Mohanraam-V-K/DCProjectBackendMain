@@ -50,7 +50,7 @@ public class CustomerBillService {
             data.setPlanstatus("active plan");
             emailData.setEmail(cus.getEmail());
             emailData.setTimeZone(ZoneId.of("Asia/Kolkata"));
-            emailData.setBody("plan is " + data.getPlanName());
+            emailData.setBody("plan is " + data.getPlanName()+" for the number "+data.getCustomerphone());
             emailData.setSubject("plan activated");
             emailData.setData(data);
             emailData.setDateTime(LocalDateTime.now().plusSeconds(3));

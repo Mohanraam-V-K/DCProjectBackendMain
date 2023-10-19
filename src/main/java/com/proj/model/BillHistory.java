@@ -17,6 +17,14 @@ public class BillHistory {
 	
     private String customerId;
     
+    private String customerphone;
+    
+	public String getCustomerphone() {
+		return customerphone;
+	}
+	public void setCustomerphone(String customerphone) {
+		this.customerphone = customerphone;
+	}
 	public UUID getBillId() {
 		return billId;
 	}
@@ -72,7 +80,7 @@ public class BillHistory {
 		// TODO Auto-generated constructor stub
 	}
 	public BillHistory(UUID billId, String customerId, String email, String plan_type, Double planAmount,
-			String planName, String planDuration, String planDueDate, String planstatus) {
+			String planName, String planDuration, String planDueDate, String planstatus , String customerphone) {
 		super();
 		this.billId = billId;
 		this.customerId = customerId;
@@ -83,6 +91,7 @@ public class BillHistory {
 		this.planDuration = planDuration;
 		this.planDueDate = planDueDate;
 		this.planstatus = planstatus;
+		this.customerphone=customerphone;
 	}
 	private Double planAmount;
     private String planName;

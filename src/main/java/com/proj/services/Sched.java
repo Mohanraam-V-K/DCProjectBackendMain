@@ -38,7 +38,7 @@ public class Sched {
         this.emailsScheduler = emailScheduler;
     }
 
-    @Scheduled(cron = "0 0 10 * * *") // 12noon everyday
+    @Scheduled(cron = "0 0 9 * * *") // 9 am everyday
     public void sendEmail() {
         List<CustomerBill> allBills = cusBillrepo.findAll();
         
@@ -61,8 +61,9 @@ public class Sched {
             long daysDifference = ChronoUnit.DAYS.between(date, currentDate);
 
             if (dueDate.isEqual(curDate)) {
-                emailData.setSubject("Your Plan is Going to end today");
-                emailData.setBody("<h1> PLan is end today </h1>");
+                emailData.setSubject("Your Plan is going to end today");
+                emailData.setBody("<h3> Your plan end's today for "+customerBill.getCustomerphone()+". Please recharge immediately "
+                		+ "for uninterrupted services. To recharge please visit our website. </h3>");
                 emailsScheduler.scheduleEmail(emailData,url);
                 System.out.println(cus.toString());
                 BillHistory history=new BillHistory();
@@ -74,20 +75,26 @@ public class Sched {
                 history.setPlanDuration(customerBill.getPlanDuration());
                 history.setPlanName(customerBill.getPlanName());
                 history.setPlanstatus("plan expired");
+                customerBill.setPlanstatus("plan expired");
+                cusBillrepo.save(customerBill);
                 history.setBillId(customerBill.getBillId());
+                history.setCustomerphone(customerBill.getCustomerphone());
                 hisrepo.save(history);
-                cusBillrepo.delete(customerBill);
+//                cusBillrepo.delete(customerBill);
                 System.out.println("same");
-            } else if (date.isBefore(currentDate)) {
-                emailData.setSubject("Your Plan is ended pls recharge");
-                emailData.setBody("<h1> PLan ended " + daysDifference + " Days before</h1>");
+            } else if (daysDifference==1||daysDifference==2) {
+                emailData.setSubject("Your Plan has expired");
+                emailData.setBody("<h3> Your plan expired " + daysDifference + " days before for the number "+customerBill.getCustomerphone()+" ."
+                		+ " Please visit our website and recharge immediately to avoid inactivity "
+                		+ "and resume services</h3>");
                 emailsScheduler.scheduleEmail(emailData,url);            
                 System.out.println("past");
             } else {
 
                 if (daysDifference == -1 || daysDifference == -2) {
-                    emailData.setSubject("Your Plan is Going to end");
-                    emailData.setBody("<h1> PLan is Going to end</h1>");
+                    emailData.setSubject("Your Plan is going to expire");
+                    emailData.setBody("<h3> Your Plan will expire in "+daysDifference+" days for the number \"+customerBill.getCustomerphone()+\" .\""
+                    		+ "This is just a reminder for you to recharge after "+daysDifference+ "days</h3>");
                     emailsScheduler.scheduleEmail(emailData,url);
                 }
 
@@ -95,6 +102,13 @@ public class Sched {
             }
 
             if (daysDifference == 10) {
+            	emailData.setSubject("Your account has been suspended indefinitely");
+            	emailData.setBody("<h3> Due to inactivity your account has been suspended"
+            			+ " indefinitely.To purchase further plans for the number"+customerBill.getCustomerphone()+" in the future please visit our "
+            			+ "website and raise an issue in report's section with proper reason for the"
+            			+ "inactivity and if the customer service representative finds it appropriate and"
+            			+ " doesn't conflict with our terms and conditions then your account will be "
+            			+ "cleared for usage.");
                 cus.setStatus("deactivated");
                 cusRepo.save(cus);
 

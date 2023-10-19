@@ -41,8 +41,8 @@ public class CustomerServices {
                         "\r\n" + //
                         "-----------------------------------------\r\n" + //
                         "\r\n" + //
-                        "To access account visit http://localhost:3000";
-                mailSender.sendMail(customer_data.getEmail(), "Account Created : Dunn App 😉", body);
+                        "To access account visit our website";
+                mailSender.sendMail(customer_data.getEmail(), "Account Created : DC Billing", body);
                 return ResponseEntity.created(null).body("Created");
 
             } else {

@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proj.model.BillHistory;
+import com.proj.model.Customer;
 import com.proj.model.Report;
 import com.proj.services.ReportService;
 
@@ -35,8 +37,18 @@ public class ReportController {
     }
 	
 	@GetMapping("/{email}")
-    public ResponseEntity<List<Report>> viewBill(@PathVariable String email) {
+    public ResponseEntity<Report> viewBill(@PathVariable String email) {
     	return reportservice.getreport(email);
+    }
+	
+	@GetMapping("/yes/{email}")
+    public ResponseEntity<String> yesreport(@PathVariable String email) {
+        return reportservice.reportyes(email);
+    }
+	
+	@PostMapping("/{email}/no")
+    public ResponseEntity<String> noreport(@PathVariable String email) {
+        return reportservice.reportno(email);
     }
 
 }

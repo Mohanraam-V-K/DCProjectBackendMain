@@ -23,11 +23,18 @@ public class CustomerBill {
     private Double planAmount;
     private String planName;
     private String planDuration;
+    private String customerphone;
     
     
     
-    public CustomerBill( String customerId, String email, String plan_type, Double planAmount,
-			String planName, String planDuration, String planDueDate, String planstatus) {
+    public String getCustomerphone() {
+		return customerphone;
+	}
+	public void setCustomerphone(String customerphone) {
+		this.customerphone = customerphone;
+	}
+	public CustomerBill( String customerId, String email, String plan_type, Double planAmount,
+			String planName, String planDuration, String planDueDate, String planstatus,String customerphone) {
 		super();
 		this.customerId = customerId;
 		this.email = email;
@@ -37,6 +44,7 @@ public class CustomerBill {
 		this.planDuration = planDuration;
 		this.planDueDate = planDueDate;
 		this.planstatus = planstatus;
+		this.customerphone=customerphone;
 	}
 	public CustomerBill() {
 		super();
