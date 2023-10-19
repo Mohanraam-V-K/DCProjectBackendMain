@@ -3,6 +3,8 @@ package com.proj.payload;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import com.proj.model.CustomerBill;
+
 import lombok.ToString;
 @ToString
 public class ScheduleEmailReq {
@@ -13,6 +15,8 @@ public class ScheduleEmailReq {
     private String body;
 
     private LocalDateTime dateTime;
+    
+    private CustomerBill data;
 
     private ZoneId timeZone;
 
@@ -55,4 +59,12 @@ public class ScheduleEmailReq {
     public void setTimeZone(ZoneId timeZone) {
         this.timeZone = timeZone;
     }
+
+	public CustomerBill getData() {
+		return data;
+	}
+
+	public void setData(CustomerBill data) {
+		this.data = data;
+	}
 }

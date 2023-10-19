@@ -38,9 +38,11 @@ public class Sched {
         this.emailsScheduler = emailScheduler;
     }
 
-    @Scheduled(cron = "0 0 12 * * *") // 12noon everyday
+    @Scheduled(cron = "0 0 10 * * *") // 12noon everyday
     public void sendEmail() {
         List<CustomerBill> allBills = cusBillrepo.findAll();
+        
+        String url = "http://localhost:8060/api/v1/emailSchedular/scheduleEmail/due";
 
         ScheduleEmailReq emailData = new ScheduleEmailReq();
 
@@ -61,7 +63,7 @@ public class Sched {
             if (dueDate.isEqual(curDate)) {
                 emailData.setSubject("Your Plan is Going to end today");
                 emailData.setBody("<h1> PLan is end today </h1>");
-                emailsScheduler.scheduleEmail(emailData);
+                emailsScheduler.scheduleEmail(emailData,url);
                 System.out.println(cus.toString());
                 BillHistory history=new BillHistory();
                 history.setCustomerId(customerBill.getCustomerId());
@@ -79,14 +81,14 @@ public class Sched {
             } else if (date.isBefore(currentDate)) {
                 emailData.setSubject("Your Plan is ended pls recharge");
                 emailData.setBody("<h1> PLan ended " + daysDifference + " Days before</h1>");
-                emailsScheduler.scheduleEmail(emailData);            
+                emailsScheduler.scheduleEmail(emailData,url);            
                 System.out.println("past");
             } else {
 
                 if (daysDifference == -1 || daysDifference == -2) {
                     emailData.setSubject("Your Plan is Going to end");
                     emailData.setBody("<h1> PLan is Going to end</h1>");
-                    emailsScheduler.scheduleEmail(emailData);
+                    emailsScheduler.scheduleEmail(emailData,url);
                 }
 
                 System.out.println("not");

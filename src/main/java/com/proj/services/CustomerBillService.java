@@ -52,8 +52,10 @@ public class CustomerBillService {
             emailData.setTimeZone(ZoneId.of("Asia/Kolkata"));
             emailData.setBody("plan is " + data.getPlanName());
             emailData.setSubject("plan activated");
+            emailData.setData(data);
             emailData.setDateTime(LocalDateTime.now().plusSeconds(3));
-            emailsScheduler.scheduleEmail(emailData);
+            emailsScheduler.scheduleEmail(emailData,"http://localhost:8060/api/v1/emailSchedular/scheduleEmail/create");
+            //emailsScheduler.scheduleEmail(emailData);
             cusBillRepo.save(data);
             return ResponseEntity.ok().body("Success");
         } 

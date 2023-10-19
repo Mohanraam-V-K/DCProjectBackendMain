@@ -18,8 +18,7 @@ public class EmailScheduler {
         this.restTemplate = restTemplate;
     }
 
-    public void scheduleEmail(ScheduleEmailReq emailRequest) {
-        String url = "http://localhost:8060/api/v1/emailSchedular/scheduleEmail";
+    public void scheduleEmail(ScheduleEmailReq emailRequest , String url) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
