@@ -164,6 +164,17 @@ public class CustomerServices {
 		}
 		return null;
 	}
+	
+//	public ResponseEntity<String> deleteProfile(String email){
+//		if(email!=null) {
+//			Customer selectedCustomer = cusRepo.findByEmail(email);
+//			cusRepo.delete(selectedCustomer);
+//			return ResponseEntity.ok().body("deleted");
+//		}
+//		else {
+//			return ResponseEntity.badRequest().body("Failed");
+//		}	
+//	}
 
 	
 	

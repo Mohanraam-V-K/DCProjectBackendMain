@@ -93,26 +93,26 @@ public class Sched {
 
                 if (daysDifference == -1 || daysDifference == -2) {
                     emailData.setSubject("Your Plan is going to expire");
-                    emailData.setBody("<h3> Your Plan will expire in "+daysDifference+" days for the number \"+customerBill.getCustomerphone()+\" .\""
-                    		+ "This is just a reminder for you to recharge after "+daysDifference+ "days</h3>");
+                    emailData.setBody("<h3> Your Plan will expire in "+-(daysDifference)+" days for the number "+customerBill.getCustomerphone()+" ."
+                    		+ "This is just a reminder for you to recharge after "+-(daysDifference)+ "days</h3>");
                     emailsScheduler.scheduleEmail(emailData,url);
                 }
-
+                System.out.println(daysDifference);
                 System.out.println("not");
             }
 
-            if (daysDifference == 10) {
+            if (daysDifference >= 10) {
             	emailData.setSubject("Your account has been suspended indefinitely");
             	emailData.setBody("<h3> Due to inactivity your account has been suspended"
             			+ " indefinitely.To purchase further plans for the number"+customerBill.getCustomerphone()+" in the future please visit our "
             			+ "website and raise an issue in report's section with proper reason for the"
-            			+ "inactivity and if the customer service representative finds it appropriate and"
+            			+ " inactivity and if the customer service representative finds it appropriate and"
             			+ " doesn't conflict with our terms and conditions then your account will be "
             			+ "cleared for usage.");
                 cus.setStatus("deactivated");
                 cusRepo.save(cus);
-
-//                cusBillrepo.delete(customerBill);
+                emailsScheduler.scheduleEmail(emailData,url);
+                cusBillrepo.delete(customerBill);
 
             }
                

@@ -46,7 +46,7 @@ public class ReportController {
         return reportservice.reportyes(email);
     }
 	
-	@PostMapping("/{email}/no")
+	@GetMapping("/no/{email}")
     public ResponseEntity<String> noreport(@PathVariable String email) {
         return reportservice.reportno(email);
     }
