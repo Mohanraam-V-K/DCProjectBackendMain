@@ -45,7 +45,24 @@ public class Customer {
     
     private String address;
     
-    public String getStatus() {
+    private Double fineAmount=0.00;
+    
+    public Double getFineAmount() {
+		return fineAmount;
+	}
+
+
+	public void setFineAmount(Double fineAmount) {
+		this.fineAmount = fineAmount;
+	}
+
+
+	public void setCustomerId(UUID customerId) {
+		this.customerId = customerId;
+	}
+
+
+	public String getStatus() {
 		return status;
 	}
 
@@ -71,7 +88,7 @@ public class Customer {
 
 
 	public Customer(UUID customerId, String customerName, String email, String password, String gender, String address,
-			String phoneNumber) {
+			String phoneNumber,Double fineAmount) {
 		super();
 		this.customerId = customerId;
 		this.customerName = customerName;
@@ -80,6 +97,7 @@ public class Customer {
 		this.gender = gender;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
+		this.fineAmount=fineAmount;
 	}
 
 

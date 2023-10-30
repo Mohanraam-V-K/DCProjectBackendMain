@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.proj.model.Customer;
 import com.proj.model.CustomerBill;
 import com.proj.services.CustomerBillService;
 
@@ -38,9 +41,9 @@ public class CustomerBillController {
     	return customerBillService.getBill(email);
     }
     
-//    @DeleteMapping("/{email}")
-//    public ResponseEntity<String> deleteprofile(@PathVariable String email){
-//    	return customerBillService.deleteProfile(email);
-//    }
+    @PutMapping("/delete")
+    public ResponseEntity<String> deleteprofile(@RequestBody CustomerBill data){
+    	return customerBillService.deleteProfile(data);
+    }
 
 }

@@ -53,8 +53,12 @@ public class CustomerController {
         return cusService.updateProfile(data);
     }
     
-//    @DeleteMapping("/{email}")
-//    public ResponseEntity<String> deleteprofile(@PathVariable String email){
-//    	return cusService.deleteProfile(email);
-//    }
+    @PostMapping("/payFine")
+    public ResponseEntity<String> payFine(@RequestBody Customer data){
+        return cusService.payFine(data);
+    }
+    @PutMapping("/delete")
+    public ResponseEntity<String> deleteprofile(@RequestBody Customer data){
+    	return cusService.deleteProfile(data);
+    }
 }

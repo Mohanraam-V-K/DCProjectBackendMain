@@ -74,15 +74,20 @@ public class CustomerBillService {
         }
     }
     
-//    public ResponseEntity<String> deleteProfile(String email){
-//		if(email!=null) {
-//			CustomerBill selectedCustomer = cusBillRepo.findByemail(email);
-//			cusBillRepo.delete(selectedCustomer);
-//			return ResponseEntity.ok().body("deleted");
-//		}
-//		else {
-//			return ResponseEntity.badRequest().body("Failed");
-//		}	
-//	}
+    public ResponseEntity<String> deleteProfile(CustomerBill data){
+		if(data.getCustomerId()!=null) {
+			CustomerBill selectedCustomer = cusBillRepo.findByCustomerId(data.getCustomerId());
+			if(selectedCustomer==null) {
+				return ResponseEntity.ok("not available");
+			}
+			else {
+			cusBillRepo.delete(selectedCustomer);
+			return ResponseEntity.ok().body("deleted");
+			}
+		}
+		else {
+			return ResponseEntity.badRequest().body("null");
+		}	
+	}
 
 }

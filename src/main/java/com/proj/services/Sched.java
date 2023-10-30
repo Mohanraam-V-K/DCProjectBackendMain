@@ -84,7 +84,7 @@ public class Sched {
                 System.out.println("same");
             } else if (daysDifference==1||daysDifference==2) {
                 emailData.setSubject("Your Plan has expired");
-                emailData.setBody("<h3> Your plan expired " + daysDifference + " days before for the number "+customerBill.getCustomerphone()+" ."
+                emailData.setBody("<h3> Your plan expired " + daysDifference + " day before for the number "+customerBill.getCustomerphone()+" ."
                 		+ " Please visit our website and recharge immediately to avoid inactivity "
                 		+ "and resume services</h3>");
                 emailsScheduler.scheduleEmail(emailData,url);            
@@ -93,23 +93,22 @@ public class Sched {
 
                 if (daysDifference == -1 || daysDifference == -2) {
                     emailData.setSubject("Your Plan is going to expire");
-                    emailData.setBody("<h3> Your Plan will expire in "+-(daysDifference)+" days for the number "+customerBill.getCustomerphone()+" ."
-                    		+ "This is just a reminder for you to recharge after "+-(daysDifference)+ "days</h3>");
+                    emailData.setBody("<h3> Your Plan will expire in "+-(daysDifference)+" day for the number "+customerBill.getCustomerphone()+" ."
+                    		+ "This is just a reminder for you to recharge after "+-(daysDifference)+" day</h3>");
                     emailsScheduler.scheduleEmail(emailData,url);
                 }
                 System.out.println(daysDifference);
-                System.out.println("not");
+//                System.out.println("not");
             }
 
-            if (daysDifference >= 10) {
+            if (daysDifference == 10) {
             	emailData.setSubject("Your account has been suspended indefinitely");
             	emailData.setBody("<h3> Due to inactivity your account has been suspended"
             			+ " indefinitely.To purchase further plans for the number"+customerBill.getCustomerphone()+" in the future please visit our "
-            			+ "website and raise an issue in report's section with proper reason for the"
-            			+ " inactivity and if the customer service representative finds it appropriate and"
-            			+ " doesn't conflict with our terms and conditions then your account will be "
-            			+ "cleared for usage.");
+            			+ "website and go to your profile and pay the fine amount of Rupees 200 in order to "
+            			+ "reactivate your account");
                 cus.setStatus("deactivated");
+                cus.setFineAmount(200.00);
                 cusRepo.save(cus);
                 emailsScheduler.scheduleEmail(emailData,url);
                 cusBillrepo.delete(customerBill);

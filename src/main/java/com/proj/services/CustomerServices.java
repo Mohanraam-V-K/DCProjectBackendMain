@@ -86,7 +86,7 @@ public class CustomerServices {
                         "\r\n" + //
                         "-----------------------------------------\r\n" + //
                         "\r\n" + //
-                        "To access account visit http://localhost:3000";
+                        "To access account visit our website";
 
                 mailSender.sendMail(selectedCustomer.getEmail(), "Password changed : DC Billing", body);
                 cusRepo.save(selectedCustomer);
@@ -114,16 +114,16 @@ public class CustomerServices {
                 selectedCustomer.setPassword(Integer.toString(randomNumber));
                 cusRepo.save(selectedCustomer);
 
-                String body = "Alert Password Change request\r\n" + //
+                String body = "Forgot the password?\r\n" + //
                         "-----------------------------------------\r\n" + //
                         "\r\n" + //
-                        "Your Temp password : "+ selectedCustomer.getPassword() +
+                        "Here is your temporary password : "+ selectedCustomer.getPassword() +
                         "\r\n" + //
                         "-----------------------------------------\r\n" + //
                         "\r\n" + //
-                        "To access account visit http://localhost:4200";
+                        "To access account visit our website and we recommend you to change password";
 
-                mailSender.sendMail(selectedCustomer.getEmail(), "Password change request : DC Billing 😉", body);
+                mailSender.sendMail(selectedCustomer.getEmail(), "Forgot password : DC Billing", body);
                 return ResponseEntity.ok().body("Success");
             }
             return ResponseEntity.ok().body("No user found");
@@ -165,16 +165,35 @@ public class CustomerServices {
 		return null;
 	}
 	
-//	public ResponseEntity<String> deleteProfile(String email){
-//		if(email!=null) {
-//			Customer selectedCustomer = cusRepo.findByEmail(email);
-//			cusRepo.delete(selectedCustomer);
-//			return ResponseEntity.ok().body("deleted");
-//		}
-//		else {
-//			return ResponseEntity.badRequest().body("Failed");
-//		}	
-//	}
+	
+	public ResponseEntity<String> payFine(Customer data){
+
+        if (data.getCustomerId() !=null) {
+            
+            Customer selectedCustomer = cusRepo.findByCustomerId(data.getCustomerId());
+            selectedCustomer.setFineAmount(0.0);
+            selectedCustomer.setStatus("Active");
+            cusRepo.save(selectedCustomer);
+            mailSender.sendMail(selectedCustomer.getEmail(),"Account Reactivated","Since you have paid the fine amount your Account has been Activated.");
+            return ResponseEntity.ok().body("Account Activated");
+
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+    }
+	
+	public ResponseEntity<String> deleteProfile(Customer data){
+		if(data.getCustomerId()!=null) {
+			Customer selectedCustomer = cusRepo.findByCustomerId(data.getCustomerId());
+			cusRepo.delete(selectedCustomer);
+			mailSender.sendMail(selectedCustomer.getEmail(),"Account deleted","You have deleted your account from our services. We hope that we didn't cause you any service dissatisfaction and you can also create a new account if you wish to enable our services in the future.");
+			return ResponseEntity.ok().body("deleted");
+		}
+		else {
+			return ResponseEntity.badRequest().body("Failed");
+		}	
+	}
 
 	
 	
